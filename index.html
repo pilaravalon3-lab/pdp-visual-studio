@@ -2181,6 +2181,130 @@ input:focus, textarea:focus, select:focus {
   font-size: 12px; color: var(--text-muted); margin-top: 16px;
 }
 
+/* ═══ PINTEREST TOOLS ═══ */
+.pin-tabs {
+  display: flex; gap: 6px; margin-bottom: 24px;
+  background: var(--glass-bg); border: 1px solid var(--glass-border);
+  border-radius: 14px; padding: 5px; backdrop-filter: blur(16px);
+}
+.pin-tab {
+  flex: 1; padding: 14px 20px; background: transparent; border: none;
+  border-radius: 10px; color: var(--text-muted); cursor: pointer;
+  font-family: 'Unbounded', sans-serif; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.04em; transition: all 0.25s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.pin-tab:hover { background: rgba(139,92,246,0.08); color: var(--text); }
+.pin-tab.active {
+  background: linear-gradient(135deg, var(--purple), var(--hot-pink));
+  color: var(--white);
+}
+.pin-panel { display: none; }
+.pin-panel.active { display: block; animation: viewSlideIn 0.3s; }
+
+.pin-prompt-container { max-width: 800px; }
+.pin-upload-area {
+  border: 2px dashed var(--glass-border); border-radius: 16px;
+  padding: 48px 24px; text-align: center; cursor: pointer;
+  transition: all 0.3s; background: rgba(139,92,246,0.03);
+  margin-bottom: 24px;
+}
+.pin-upload-area:hover { border-color: var(--purple); background: rgba(139,92,246,0.08); }
+.pin-upload-area.has-image { padding: 16px; border-style: solid; border-color: var(--purple); }
+
+.pin-mode-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;
+}
+.pin-mode-btn {
+  padding: 20px 16px; background: var(--glass-bg);
+  border: 1px solid var(--glass-border); border-radius: 14px;
+  color: var(--text-muted); cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  text-align: center; transition: all 0.25s;
+  font-family: 'Poppins', sans-serif; font-size: 11px;
+}
+.pin-mode-btn strong {
+  font-family: 'Unbounded', sans-serif; font-size: 12px; font-weight: 700;
+  color: var(--text);
+}
+.pin-mode-btn:hover { border-color: var(--purple); background: rgba(139,92,246,0.1); }
+.pin-mode-btn.active {
+  background: rgba(139,92,246,0.15); border-color: var(--purple);
+  color: var(--text); box-shadow: 0 4px 20px rgba(139,92,246,0.2);
+}
+.pin-client-row {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.pin-prompt-result {
+  background: var(--glass-bg); border: 1px solid var(--glass-border);
+  border-radius: 16px; padding: 24px; margin-bottom: 16px;
+  backdrop-filter: blur(16px);
+}
+.pin-prompt-label {
+  font-family: 'Unbounded', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.pin-prompt-text {
+  background: rgba(0,0,0,0.3); padding: 16px; border-radius: 10px;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7;
+  color: var(--text); white-space: pre-wrap; word-break: break-word;
+  margin-bottom: 14px;
+}
+.pin-prompt-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.pin-colors-row {
+  display: flex; gap: 6px; margin-top: 12px; align-items: center;
+}
+.pin-color-dot {
+  width: 24px; height: 24px; border-radius: 6px;
+  border: 2px solid rgba(255,255,255,0.1);
+}
+
+/* Moodboard */
+.mb-header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.mb-grid {
+  column-count: 3; column-gap: 14px;
+}
+@media (max-width: 900px) { .mb-grid { column-count: 2; } }
+@media (max-width: 600px) { .mb-grid { column-count: 1; } }
+.mb-card {
+  break-inside: avoid; margin-bottom: 14px;
+  background: var(--glass-bg); border: 1px solid var(--glass-border);
+  border-radius: 14px; overflow: hidden; transition: all 0.3s;
+  backdrop-filter: blur(12px);
+}
+.mb-card:hover { border-color: rgba(139,92,246,0.3); transform: translateY(-2px); }
+.mb-card img {
+  width: 100%; display: block; object-fit: cover;
+}
+.mb-card-info {
+  padding: 12px 14px;
+}
+.mb-card-colors { display: flex; gap: 4px; margin-bottom: 8px; }
+.mb-card-color { width: 16px; height: 16px; border-radius: 4px; }
+.mb-card-note {
+  width: 100%; padding: 6px 8px;
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text); font-family: 'Poppins', sans-serif;
+  font-size: 10px; resize: none; min-height: 28px;
+}
+.mb-card-note:focus { outline: none; border-color: var(--purple); }
+.mb-card-actions {
+  display: flex; gap: 6px; margin-top: 8px;
+}
+.mb-card-btn {
+  padding: 4px 10px; background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text-muted); cursor: pointer; font-size: 9px; font-weight: 600;
+  transition: all 0.2s;
+}
+.mb-card-btn:hover { background: rgba(139,92,246,0.15); color: var(--text); border-color: var(--purple); }
+.mb-card-btn.delete:hover { background: rgba(239,68,68,0.15); color: #ef4444; border-color: #ef4444; }
+
 /* ═══ SAVE CLIENT BUTTON ═══ */
 .btn-save-client {
   margin-top: 16px; padding: 14px 24px;
@@ -2704,6 +2828,10 @@ input:focus, textarea:focus, select:focus {
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
         <span>Mood Mixer</span>
       </a>
+      <a class="sb-nav-item" data-view="pinterest" onclick="switchView('pinterest')">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 12a4 4 0 1 1 8 0c0 3-2 5-4 7-2-2-4-4-4-7z"/><circle cx="12" cy="12" r="10"/></svg>
+        <span>Pinterest Tools</span>
+      </a>
       <a class="sb-nav-item" data-view="visualdna" onclick="switchView('visualdna')">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
         <span>Visual DNA</span>
@@ -2941,6 +3069,85 @@ input:focus, textarea:focus, select:focus {
         <p class="view-subtitle">Fingerprint visual acumulativo de cada cliente — el sistema aprende de tus KVs</p>
       </div>
       <div id="vdnaBody"></div>
+    </div>
+    
+    <!-- View: PINTEREST TOOLS -->
+    <div class="view-content" id="view-pinterest">
+      <div class="view-header">
+        <h1 class="view-title">Pinterest Tools</h1>
+        <p class="view-subtitle">Transformá referencias en prompts adaptados a tu cliente + armá moodboards visuales</p>
+      </div>
+      
+      <!-- Sub-tabs: Prompt Generator | Moodboard -->
+      <div class="pin-tabs">
+        <button class="pin-tab active" onclick="switchPinTab('prompt')">✨ Pinterest → Prompt</button>
+        <button class="pin-tab" onclick="switchPinTab('moodboard')">📌 Moodboard</button>
+      </div>
+      
+      <!-- Pinterest → Prompt -->
+      <div class="pin-panel active" id="pinPanelPrompt">
+        <div class="pin-prompt-container">
+          <div class="pin-upload-area" id="pinUploadArea" onclick="document.getElementById('pinImageInput').click()">
+            <input type="file" id="pinImageInput" accept="image/*" style="display:none" onchange="handlePinImage(event)" />
+            <div id="pinUploadPlaceholder">
+              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:0.3;margin-bottom:12px;"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <div style="font-family:'Unbounded',sans-serif;font-size:12px;font-weight:700;">Subí tu referencia de Pinterest</div>
+              <div style="font-size:11px;color:var(--text-dim);margin-top:6px;">JPG, PNG · la imagen que querés adaptar</div>
+            </div>
+            <img id="pinPreviewImg" style="display:none;max-height:300px;border-radius:12px;object-fit:contain;" />
+          </div>
+          
+          <div id="pinPromptOptions" style="display:none;">
+            <div style="font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;">¿Qué tipo de prompt necesitás?</div>
+            <div class="pin-mode-grid">
+              <button class="pin-mode-btn active" data-mode="faithful" onclick="selectPinMode('faithful')">
+                <span style="font-size:22px;">🎯</span>
+                <strong>Fiel</strong>
+                <span>Mismo estilo adaptado a tu marca</span>
+              </button>
+              <button class="pin-mode-btn" data-mode="inspired" onclick="selectPinMode('inspired')">
+                <span style="font-size:22px;">💫</span>
+                <strong>Inspirado</strong>
+                <span>Misma onda, composición diferente</span>
+              </button>
+              <button class="pin-mode-btn" data-mode="inverse" onclick="selectPinMode('inverse')">
+                <span style="font-size:22px;">🔄</span>
+                <strong>Inverso</strong>
+                <span>Lo opuesto a esta referencia</span>
+              </button>
+            </div>
+            
+            <div class="pin-client-row">
+              <label style="font-family:'Unbounded',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-dim);">Adaptar para cliente:</label>
+              <select id="pinClientSelect" class="sb-ia-select" style="flex:1;max-width:300px;"></select>
+            </div>
+            
+            <button class="btn-primary-sm" onclick="generatePinPrompt()" style="margin:20px 0;padding:16px 32px;">
+              ✦ Generar prompts
+            </button>
+            
+            <div id="pinResults"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Moodboard -->
+      <div class="pin-panel" id="pinPanelMoodboard">
+        <div class="mb-header">
+          <select id="mbClientSelect" class="sb-ia-select" onchange="renderMoodboard()" style="max-width:300px;">
+            <option value="">Seleccioná un cliente</option>
+          </select>
+          <div style="display:flex;gap:10px;">
+            <button class="btn-primary-sm" onclick="document.getElementById('mbAddInput').click()">+ Agregar imagen</button>
+            <input type="file" id="mbAddInput" accept="image/*" multiple style="display:none" onchange="addToMoodboard(event)" />
+            <button class="btn-ghost" style="font-size:10px;" onclick="pasteMoodboardImage()">📋 Pegar imagen</button>
+          </div>
+        </div>
+        <div id="mbGrid" class="mb-grid"></div>
+        <div id="mbEmpty" class="dash-empty" style="display:none;padding:60px;">
+          Seleccioná un cliente y empezá a agregar imágenes de referencia.
+        </div>
+      </div>
     </div>
     
   </main>
@@ -3938,38 +4145,44 @@ let versionHistory = {}; // Stores previous versions per post index
 // ═══ PROFILES (localStorage) ═══
 function getProfiles() { try { return JSON.parse(localStorage.getItem('pdpvs_profiles') || '{}'); } catch { return {}; } }
 function saveProfile() {
-  const name = document.getElementById('clientName').value.trim();
+  const name = document.getElementById('clientName')?.value?.trim();
   if (!name) { showToast('Escribí el nombre del cliente primero'); return; }
   const profiles = getProfiles();
-  // Get current KV thumb data
   const kvThumb = document.getElementById('kvThumb');
   const kvFilename = document.getElementById('kvFilename')?.textContent || '';
   profiles[name] = {
     name,
-    industry: document.getElementById('clientIndustry').value.trim(),
-    audience: document.getElementById('clientAudience').value.trim(),
-    style: document.getElementById('kvStyle').value.trim(),
-    mood: document.getElementById('kvMood').value.trim(),
-    elements: document.getElementById('kvElements').value.trim(),
-    typo: document.getElementById('kvTypo').value.trim(),
-    web: document.getElementById('kvWeb')?.value.trim() || '',
-    instagram: document.getElementById('kvInstagram')?.value.trim() || '',
-    kvThumb: (kvThumb && kvThumb.src && kvThumb.src.startsWith('data:')) ? kvThumb.src : '',
-    kvFilename: kvFilename,
-    colors: extractedColors.map(c => ({hex:c.hex,name:c.name,r:c.r,g:c.g,b:c.b})),
-    userKeywords: userKeywords,
+    industry: document.getElementById('clientIndustry')?.value?.trim() || '',
+    audience: document.getElementById('clientAudience')?.value?.trim() || '',
+    style: document.getElementById('kvStyle')?.value?.trim() || '',
+    mood: document.getElementById('kvMood')?.value?.trim() || '',
+    elements: document.getElementById('kvElements')?.value?.trim() || '',
+    typo: document.getElementById('kvTypo')?.value?.trim() || '',
+    web: document.getElementById('kvWeb')?.value?.trim() || '',
+    instagram: document.getElementById('kvInstagram')?.value?.trim() || '',
+    kvThumb: (kvThumb?.src?.startsWith('data:')) ? kvThumb.src : '',
+    kvFilename,
+    colors: (typeof extractedColors !== 'undefined' && extractedColors.length) ? extractedColors.map(c => ({hex:c.hex,name:c.name})) : [],
+    userKeywords: (typeof userKeywords !== 'undefined') ? userKeywords : [],
     savedAt: new Date().toISOString()
   };
-  // Preserve existing logo if present
-  const existingProfile = getProfiles()[name];
-  if (existingProfile && existingProfile.logo) {
-    profiles[name].logo = existingProfile.logo;
-  }
+  // Preserve existing logo
+  const existing = getProfiles()[name];
+  if (existing?.logo) profiles[name].logo = existing.logo;
   localStorage.setItem('pdpvs_profiles', JSON.stringify(profiles));
   renderProfileCards();
-  hideClientForm();
-  hideKVForm();
-  showToast(`Perfil "${name}" guardado`);
+  
+  // Also update library + sidebar
+  if (typeof currentUser !== 'undefined' && currentUser) {
+    const lib = (typeof loadLibrary === 'function') ? loadLibrary() : {};
+    if (!lib[name]) {
+      lib[name] = { bajadas: [], refs: [], keywords: [], prompts: [], pieces: [], keyvisuals: [], notes: [] };
+    }
+    if (typeof saveLibrary === 'function') saveLibrary(lib);
+    if (typeof updateSidebarClients === 'function') updateSidebarClients();
+  }
+  
+  showToast(`Perfil "${name}" guardado ✓`);
 }
 function loadProfile(name) {
   if (!name) return;
@@ -4543,33 +4756,46 @@ addPostEntry();
 
 // Client auto-hide after save
 function hideClientForm() {
-  const name = document.getElementById('clientName').value.trim();
+  const name = document.getElementById('clientName')?.value?.trim();
   if (name) {
-    document.getElementById('clientForm').style.display = 'none';
+    const form = document.getElementById('clientForm');
+    if (form) form.style.display = 'none';
     const banner = document.getElementById('clientSavedBanner');
-    banner.style.display = 'flex';
-    banner.style.alignItems = 'center';
-    document.getElementById('clientSavedName').textContent = `${name} · ${document.getElementById('clientIndustry').value.trim() || 'Sin rubro'}`;
+    if (banner) {
+      banner.style.display = 'flex';
+      banner.style.alignItems = 'center';
+    }
+    const bannerName = document.getElementById('clientSavedName');
+    if (bannerName) bannerName.textContent = `${name} · ${document.getElementById('clientIndustry')?.value?.trim() || 'Sin rubro'}`;
   }
 }
 function showClientForm() {
-  document.getElementById('clientForm').style.display = 'block';
-  document.getElementById('clientSavedBanner').style.display = 'none';
+  const form = document.getElementById('clientForm');
+  if (form) form.style.display = 'block';
+  const banner = document.getElementById('clientSavedBanner');
+  if (banner) banner.style.display = 'none';
 }
 
 // KV auto-hide after profile save
 function hideKVForm() {
-  if (extractedColors.length === 0) return;
-  document.getElementById('kvForm').style.display = 'none';
+  if (typeof extractedColors === 'undefined' || extractedColors.length === 0) return;
+  const kvForm = document.getElementById('kvForm');
+  if (kvForm) kvForm.style.display = 'none';
   const banner = document.getElementById('kvSavedBanner');
-  banner.style.display = 'flex';
-  const thumb = document.getElementById('kvThumb');
-  if (thumb && thumb.src) document.getElementById('kvSavedThumb').src = thumb.src;
-  document.getElementById('kvSavedName').textContent = `${document.getElementById('kvFilename').textContent || 'Keyvisual'} · ${extractedColors.length} colores`;
+  if (banner) {
+    banner.style.display = 'flex';
+    const thumb = document.getElementById('kvThumb');
+    const savedThumb = document.getElementById('kvSavedThumb');
+    if (thumb?.src && savedThumb) savedThumb.src = thumb.src;
+    const savedName = document.getElementById('kvSavedName');
+    if (savedName) savedName.textContent = `${document.getElementById('kvFilename')?.textContent || 'Keyvisual'} · ${extractedColors.length} colores`;
+  }
 }
 function showKVForm() {
-  document.getElementById('kvForm').style.display = 'block';
-  document.getElementById('kvSavedBanner').style.display = 'none';
+  const kvForm = document.getElementById('kvForm');
+  if (kvForm) kvForm.style.display = 'block';
+  const banner = document.getElementById('kvSavedBanner');
+  if (banner) banner.style.display = 'none';
 }
 
 // Collapse KV panel
@@ -6125,51 +6351,8 @@ function escapeHTML(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ═══ VERSION HISTORY — save/restore previous generations ═══
-function saveVersion(idx, type, data) {
-  if (!versionHistory[idx]) versionHistory[idx] = [];
-  versionHistory[idx].push({
-    type,
-    data: JSON.parse(JSON.stringify(data)),
-    timestamp: new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })
-  });
-  // Keep last 10 versions per post
-  if (versionHistory[idx].length > 10) versionHistory[idx].shift();
-}
-
-function undoLastVersion(idx, type) {
-  if (!versionHistory[idx] || !versionHistory[idx].length) {
-    showToast('No hay versiones anteriores');
-    return;
-  }
-  // Find last version of this type
-  const versions = versionHistory[idx].filter(v => v.type === type || v.type.startsWith(type));
-  if (!versions.length) {
-    showToast('No hay versiones anteriores de este tipo');
-    return;
-  }
-  const last = versions[versions.length - 1];
-  const r = allResults[idx];
-  
-  if (last.type === 'keywords') {
-    r.keywords = last.data;
-    const card = document.getElementById('card-' + idx);
-    const kwPanel = card.querySelector('.section-panel[data-section="keywords"]');
-    if (kwPanel) kwPanel.innerHTML = renderKeywordsSection(idx, r.keywords, r.colorFilter);
-    showToast(`Keywords restaurados (versión de ${last.timestamp})`);
-  } else if (last.type.startsWith('prompt_')) {
-    const tool = last.type.replace('prompt_', '');
-    r.prompts[tool] = last.data;
-    document.getElementById(`pb-${idx}-${tool}`).textContent = last.data;
-    const esEl = document.getElementById(`pbes-${idx}-${tool}`);
-    if (esEl) esEl.textContent = quickTranslateToES(last.data);
-    showToast(`Prompt ${tool} restaurado (versión de ${last.timestamp})`);
-  }
-  
-  // Remove used version
-  const vi = versionHistory[idx].indexOf(last);
-  if (vi >= 0) versionHistory[idx].splice(vi, 1);
-}
+// ═══ VERSION HISTORY — now handled by Phase 2 saveVersion with localStorage ═══
+// (old in-memory saveVersion + undoLastVersion removed to avoid conflict)
 
 // ═══ BRAND MEMORY — learns from discards ═══
 function getDiscardedKeywords() {
@@ -9430,12 +9613,12 @@ function handleMoodImage(idx, e) {
       slot.parentElement.classList.add('has-image');
     }
     // Extract colors from image using canvas
-    extractColorsFromImage(ev.target.result, idx);
+    extractMoodColors(ev.target.result, idx);
   };
   reader.readAsDataURL(file);
 }
 
-function extractColorsFromImage(dataUrl, idx) {
+function extractMoodColors(dataUrl, idx) {
   const img = new Image();
   img.crossOrigin = 'anonymous';
   img.onload = () => {
@@ -9652,6 +9835,312 @@ function renderVisualDNA() {
     </div>`;
   }).join('');
 }
+
+// ═══════════════════════════════════════════════════════════════
+// PINTEREST TOOLS
+// ═══════════════════════════════════════════════════════════════
+
+// Sub-tab switch
+function switchPinTab(tab) {
+  document.querySelectorAll('.pin-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`.pin-tab:nth-child(${tab==='prompt'?1:2})`)?.classList.add('active');
+  document.querySelectorAll('.pin-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(tab === 'prompt' ? 'pinPanelPrompt' : 'pinPanelMoodboard')?.classList.add('active');
+  if (tab === 'moodboard') {
+    populateMBClientSelect();
+    renderMoodboard();
+  }
+  if (tab === 'prompt') populatePinClientSelect();
+}
+
+// Populate client selects
+function populatePinClientSelect() {
+  const sel = document.getElementById('pinClientSelect');
+  if (!sel) return;
+  const lib = (typeof loadLibrary === 'function') ? loadLibrary() : {};
+  const clients = Object.keys(lib);
+  const current = document.getElementById('clientName')?.value?.trim() || '';
+  sel.innerHTML = clients.length
+    ? clients.map(c => `<option value="${c.replace(/"/g,'&quot;')}" ${c===current?'selected':''}>${c.replace(/</g,'&lt;')}</option>`).join('')
+    : '<option value="">Sin clientes guardados</option>';
+}
+
+function populateMBClientSelect() {
+  const sel = document.getElementById('mbClientSelect');
+  if (!sel) return;
+  const lib = (typeof loadLibrary === 'function') ? loadLibrary() : {};
+  const clients = Object.keys(lib);
+  const current = document.getElementById('clientName')?.value?.trim() || '';
+  sel.innerHTML = '<option value="">Seleccioná un cliente</option>' +
+    clients.map(c => `<option value="${c.replace(/"/g,'&quot;')}" ${c===current?'selected':''}>${c.replace(/</g,'&lt;')}</option>`).join('');
+}
+
+// ─── PINTEREST → PROMPT ───
+let pinImageData = null;
+let pinMode = 'faithful';
+
+function handlePinImage(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    pinImageData = ev.target.result;
+    const preview = document.getElementById('pinPreviewImg');
+    const placeholder = document.getElementById('pinUploadPlaceholder');
+    const area = document.getElementById('pinUploadArea');
+    const options = document.getElementById('pinPromptOptions');
+    if (preview) { preview.src = ev.target.result; preview.style.display = 'block'; }
+    if (placeholder) placeholder.style.display = 'none';
+    if (area) area.classList.add('has-image');
+    if (options) options.style.display = 'block';
+    populatePinClientSelect();
+  };
+  reader.readAsDataURL(file);
+}
+
+function selectPinMode(mode) {
+  pinMode = mode;
+  document.querySelectorAll('.pin-mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+}
+
+async function generatePinPrompt() {
+  if (!pinImageData) { showToast('Subí una imagen primero'); return; }
+  const clientName = document.getElementById('pinClientSelect')?.value || '';
+  const resultsEl = document.getElementById('pinResults');
+  if (!resultsEl) return;
+  
+  resultsEl.innerHTML = '<div class="af-loading"><div class="af-loading-spinner"></div>Analizando imagen y generando prompts...</div>';
+  
+  // Get client profile for context
+  let clientContext = '';
+  if (clientName) {
+    const profiles = (typeof getProfiles === 'function') ? getProfiles() : {};
+    const p = profiles[clientName];
+    if (p) {
+      clientContext = `\nClient brand context: Style: ${p.style || 'not defined'}. Mood: ${p.mood || 'not defined'}. Typography: ${p.typo || 'not defined'}. Colors: ${(p.colors||[]).map(c=>c.hex||c).join(', ') || 'not defined'}.`;
+    }
+  }
+  
+  const modeInstructions = {
+    faithful: 'Generate a prompt that recreates this image\'s exact composition, lighting, and mood but adapted to the client\'s brand colors, typography, and visual identity. Keep the same layout and camera angle.',
+    inspired: 'Generate a prompt inspired by this image\'s overall mood and aesthetic, but with a completely different composition and angle. Capture the feeling, not the literal scene.',
+    inverse: 'Generate a prompt that creates the OPPOSITE visual direction of this image. If it\'s warm, go cold. If it\'s minimal, go maximal. If it\'s static, go dynamic. Explain what to avoid based on this reference.'
+  };
+  
+  try {
+    const base64 = pinImageData.split(',')[1];
+    const mimeType = pinImageData.split(';')[0].split(':')[1] || 'image/jpeg';
+    
+    const response = await fetch('https://pdpvisualstudio-backend.onrender.com/api/pinterest-prompt', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        image: base64,
+        mimeType,
+        mode: pinMode,
+        modeInstruction: modeInstructions[pinMode],
+        clientContext
+      }),
+      signal: AbortSignal.timeout(45000)
+    });
+    
+    if (!response.ok) throw new Error('Backend error ' + response.status);
+    const data = await response.json();
+    
+    const escH = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const modeLabels = { faithful: '🎯 Prompt Fiel', inspired: '💫 Prompt Inspirado', inverse: '🔄 Prompt Inverso' };
+    const modeColors = { faithful: 'var(--purple-light)', inspired: 'var(--hot-pink)', inverse: 'var(--cyan)' };
+    
+    // Store for copy
+    window._pinLastPrompt = data.prompt || '';
+    window._pinLastAnalysis = data.analysis || '';
+    window._pinLastColors = data.colors || [];
+    
+    resultsEl.innerHTML = `
+      ${data.analysis ? `<div class="pin-prompt-result">
+        <div class="pin-prompt-label" style="color:var(--text-muted);">📋 Análisis de la imagen</div>
+        <div style="font-size:13px;color:var(--text);line-height:1.6;">${escH(data.analysis)}</div>
+        ${data.colors?.length ? `<div class="pin-colors-row">
+          <span style="font-size:10px;color:var(--text-dim);margin-right:6px;">Paleta detectada:</span>
+          ${data.colors.map(c => `<div class="pin-color-dot" style="background:${c};" title="${c}"></div>`).join('')}
+        </div>` : ''}
+      </div>` : ''}
+      
+      <div class="pin-prompt-result">
+        <div class="pin-prompt-label" style="color:${modeColors[pinMode]};">${modeLabels[pinMode]}</div>
+        <div class="pin-prompt-text">${escH(data.prompt)}</div>
+        <div class="pin-prompt-actions">
+          <button class="imagex-result-btn copy" onclick="navigator.clipboard.writeText(window._pinLastPrompt);this.textContent='✓ Copiado';setTimeout(()=>this.textContent='📋 Copiar prompt',1500)">📋 Copiar prompt</button>
+          <a href="https://gemini.google.com/" target="_blank" class="imagex-result-btn gemini">✨ Abrir Gemini</a>
+          <a href="https://chatgpt.com/" target="_blank" class="imagex-result-btn chatgpt">🤖 Abrir ChatGPT</a>
+          ${clientName ? `<button class="imagex-result-btn copy" onclick="savePinToMoodboard('${clientName.replace(/'/g,"\\'")}')">📌 Guardar en moodboard</button>` : ''}
+        </div>
+      </div>
+    `;
+  } catch(e) {
+    console.warn('Pinterest prompt error:', e);
+    resultsEl.innerHTML = `<div style="padding:20px;color:var(--orange);font-size:13px;">⚠️ ${e.message === 'Backend error 500' ? 'El servidor no pudo analizar la imagen. Intentá de nuevo en unos segundos.' : 'Error de conexión. El servidor puede estar arrancando (~20s).'}</div>`;
+  }
+}
+
+function savePinToMoodboard(clientName) {
+  if (!pinImageData || !clientName) return;
+  addMoodboardImage(clientName, pinImageData, window._pinLastAnalysis || '', window._pinLastColors || []);
+  showToast(`Guardado en moodboard de ${clientName}`);
+}
+
+// ─── MOODBOARD BUILDER ───
+function getMoodboardKey() {
+  if (!currentUser) return 'pdpvs_moodboard_default';
+  return `pdpvs_moodboard_${currentUser.name.trim().toLowerCase().replace(/\s+/g,'_')}`;
+}
+
+function loadMoodboards() {
+  try { return JSON.parse(localStorage.getItem(getMoodboardKey()) || '{}'); } catch { return {}; }
+}
+
+function saveMoodboards(data) {
+  try { localStorage.setItem(getMoodboardKey(), JSON.stringify(data)); }
+  catch(e) {
+    if (e.name === 'QuotaExceededError') showToast('Almacenamiento lleno — eliminá imágenes viejas');
+    console.warn('Moodboard save failed:', e);
+  }
+}
+
+function addMoodboardImage(clientName, imgData, note, colors) {
+  const boards = loadMoodboards();
+  if (!boards[clientName]) boards[clientName] = [];
+  
+  // Compress image to thumbnail (max 400px wide)
+  const img = new Image();
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    const maxW = 400;
+    const scale = Math.min(1, maxW / img.width);
+    canvas.width = img.width * scale;
+    canvas.height = img.height * scale;
+    canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+    const compressed = canvas.toDataURL('image/jpeg', 0.7);
+    
+    boards[clientName].unshift({
+      id: 'mb' + Date.now() + Math.random().toString(36).slice(2,5),
+      img: compressed,
+      note: note || '',
+      colors: colors || [],
+      createdAt: Date.now()
+    });
+    
+    if (boards[clientName].length > 20) boards[clientName].length = 20;
+    saveMoodboards(boards);
+    renderMoodboard();
+  };
+  img.src = imgData;
+}
+
+function addToMoodboard(e) {
+  const client = document.getElementById('mbClientSelect')?.value;
+  if (!client) { showToast('Seleccioná un cliente primero'); return; }
+  const files = e.target.files;
+  for (let i = 0; i < files.length; i++) {
+    const reader = new FileReader();
+    reader.onload = (ev) => addMoodboardImage(client, ev.target.result, '', []);
+    reader.readAsDataURL(files[i]);
+  }
+}
+
+function pasteMoodboardImage() {
+  const client = document.getElementById('mbClientSelect')?.value;
+  if (!client) { showToast('Seleccioná un cliente primero'); return; }
+  navigator.clipboard.read().then(items => {
+    for (const item of items) {
+      const imgType = item.types.find(t => t.startsWith('image/'));
+      if (imgType) {
+        item.getType(imgType).then(blob => {
+          const reader = new FileReader();
+          reader.onload = ev => addMoodboardImage(client, ev.target.result, '', []);
+          reader.readAsDataURL(blob);
+        });
+        return;
+      }
+    }
+    showToast('No hay imagen en el portapapeles. Copiá una imagen primero.');
+  }).catch(() => showToast('No se pudo acceder al portapapeles'));
+}
+
+function deleteMoodboardImage(clientName, imgId) {
+  const boards = loadMoodboards();
+  if (boards[clientName]) {
+    boards[clientName] = boards[clientName].filter(i => i.id !== imgId);
+    saveMoodboards(boards);
+    renderMoodboard();
+  }
+}
+
+function updateMoodboardNote(clientName, imgId, note) {
+  const boards = loadMoodboards();
+  if (boards[clientName]) {
+    const item = boards[clientName].find(i => i.id === imgId);
+    if (item) { item.note = note; saveMoodboards(boards); }
+  }
+}
+
+function renderMoodboard() {
+  const client = document.getElementById('mbClientSelect')?.value;
+  const grid = document.getElementById('mbGrid');
+  const empty = document.getElementById('mbEmpty');
+  if (!grid) return;
+  
+  if (!client) {
+    grid.innerHTML = '';
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+  
+  const boards = loadMoodboards();
+  const images = boards[client] || [];
+  
+  if (!images.length) {
+    grid.innerHTML = '';
+    if (empty) { empty.style.display = 'block'; empty.textContent = `Sin imágenes para ${client}. Subí o pegá referencias.`; }
+    return;
+  }
+  
+  if (empty) empty.style.display = 'none';
+  const escH = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  const escA = s => String(s||'').replace(/'/g,"\\'");
+  
+  grid.innerHTML = images.map(item => `
+    <div class="mb-card">
+      <img src="${item.img}" alt="ref" loading="lazy" />
+      <div class="mb-card-info">
+        ${item.colors?.length ? `<div class="mb-card-colors">${item.colors.slice(0,6).map(c => `<div class="mb-card-color" style="background:${c};"></div>`).join('')}</div>` : ''}
+        <textarea class="mb-card-note" placeholder="Nota..." onchange="updateMoodboardNote('${escA(client)}','${item.id}',this.value)">${escH(item.note)}</textarea>
+        <div class="mb-card-actions">
+          <button class="mb-card-btn" onclick="navigator.clipboard.writeText('${escA(item.note || 'referencia visual')}');showToast('Nota copiada')">📋</button>
+          <button class="mb-card-btn delete" onclick="deleteMoodboardImage('${escA(client)}','${item.id}')">🗑️</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Register pinterest view in switchView
+const _origSwitchView3 = switchView;
+switchView = function(view) {
+  if (view === 'pinterest') {
+    initNewLayout();
+    document.querySelectorAll('.sb-nav-item').forEach(i => i.classList.remove('active'));
+    document.querySelector('.sb-nav-item[data-view="pinterest"]')?.classList.add('active');
+    document.querySelectorAll('.view-content').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-pinterest')?.classList.add('active');
+    document.getElementById('sidebar')?.classList.remove('mobile-open');
+    try { localStorage.setItem('pdpvs_active_view', view); } catch {}
+    populatePinClientSelect();
+    populateMBClientSelect();
+    return;
+  }
+  _origSwitchView3(view);
+};
 
 </script>
 </body>

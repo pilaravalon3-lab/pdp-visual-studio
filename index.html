@@ -1461,7 +1461,16 @@ select option { background: var(--bg2); color: var(--white); }
   font-size: 12px; color: var(--text-muted);
 }
 .sb-client-item:hover { background: rgba(125,3,255,0.08); color: var(--text); }
-.sb-client-item.active { background: rgba(125,3,255,0.15); color: var(--text); }
+.sb-client-item.active { 
+  background: rgba(125,3,255,0.2); 
+  color: var(--text); 
+  font-weight: 700;
+  box-shadow: inset 3px 0 0 var(--purple);
+}
+.sb-client-item.active .sb-client-dot {
+  background: var(--purple);
+  box-shadow: 0 0 8px rgba(125,3,255,0.6);
+}
 .sb-client-dot {
   width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
   background: var(--purple);
@@ -4469,7 +4478,7 @@ window.addEventListener('load', () => {
 });
 
 let promptQuestionnaire = {}; // Stores answers from the mini questionnaire per post
-let versionHistory = {}; // Stores previous versions per post index
+// versionHistory removed — now using localStorage-backed system (see saveVersion below)
 
 // ═══ PROFILES (localStorage) ═══
 function getProfiles() { try { return JSON.parse(localStorage.getItem('pdpvs_profiles') || '{}'); } catch { return {}; } }
@@ -4546,10 +4555,9 @@ function loadProfile(name) {
     userKeywords = p.userKeywords;
   }
   updateStudioSuggestions();
-  // Auto-hide forms (already saved profile)
-  hideClientForm();
-  hideKVForm();
   renderProfileCards();
+  // Update sidebar to show the loaded client
+  if (typeof updateSidebarClients === 'function') updateSidebarClients();
   showToast(`Perfil "${name}" cargado`);
 }
 function deleteProfile(name) {
@@ -6558,7 +6566,7 @@ function renderKeywordsSection(idx, keywords, colorFilter) {
       </div>
       
       <div class="filter-bar" style="background:transparent;border:none;padding:0;justify-content:flex-end;gap:8px;">
-        <button class="btn-ghost" onclick="undoLastVersion(${idx}, 'keywords')" style="font-size:10px;padding:8px 14px;" title="Restaurar versión anterior">↩ Deshacer</button>
+        <button class="btn-ghost" onclick="restoreLastVersion(${idx}, 'keywords')" style="font-size:10px;padding:8px 14px;" title="Restaurar versión anterior">↩ Deshacer</button>
         <button class="btn-ai-enhance" onclick="aiEnhanceKeywords(${idx})" id="btn-ai-kw-${idx}" title="Usa IA para refinar y mejorar los keywords">
           <span>✦ Mejorar con IA</span>
         </button>
@@ -6641,8 +6649,8 @@ function renderKeywordsSection(idx, keywords, colorFilter) {
         <div class="kw-list">
           ${savedKw.map((k,ki) => `
             <div class="kw-item" style="border-color:rgba(0,255,0,0.15);">
-              <input class="kw-text-editable" value="${String(k).replace(/"/g,'&quot;')}" onblur="editUserKeyword(${ki}, this.value, ${idx})" onkeydown="if(event.key==='Enter')this.blur()" />
-              <button class="btn-search" onclick="openAllBanks(document.querySelectorAll('.kw-text-editable')[${ki}]?.value || '${k.replace(/'/g,"\\'")}', allResults[${idx}].colorFilter || '')">Buscar</button>
+              <input class="kw-text-editable" data-ki="${ki}" data-card="${idx}" value="${String(k).replace(/"/g,'&quot;')}" onblur="editUserKeyword(${ki}, this.value, ${idx})" onkeydown="if(event.key==='Enter')this.blur()" />
+              <button class="btn-search" onclick="searchUserKeyword(${idx}, ${ki})">Buscar</button>
               <button class="btn-ghost" style="padding:4px 8px;font-size:9px;color:var(--orange);" onclick="userKeywords.splice(${ki},1);regenerateKeywords(${idx})">✕</button>
             </div>
           `).join('')}
@@ -6997,6 +7005,15 @@ function addUserKeyword(idx) {
     if (kwPanel) kwPanel.innerHTML = renderKeywordsSection(idx, allResults[idx].keywords, allResults[idx].colorFilter);
   }
   showToast('Keyword guardado — mejora futuras búsquedas');
+}
+
+function searchUserKeyword(cardIdx, ki) {
+  // Get current value from the input (may have been edited)
+  const card = document.getElementById('card-' + cardIdx);
+  const input = card?.querySelector(`.kw-text-editable[data-ki="${ki}"]`);
+  const value = input?.value?.trim() || userKeywords[ki] || '';
+  if (!value) { showToast('Keyword vacío'); return; }
+  openAllBanks(value, allResults[cardIdx]?.colorFilter || '');
 }
 
 function editUserKeyword(ki, newValue, idx) {
@@ -9115,20 +9132,15 @@ function updateSidebarClients() {
   const list = document.getElementById('sbClientsList');
   if (!list) return;
   const lib = loadLibrary();
-  let clients = Object.keys(lib);
+  const clients = Object.keys(lib);
   
-  // FILTER: only show the active studio client (if any)
+  // Active client = the one currently loaded in Studio
   const activeClient = (document.getElementById('clientName')?.value || '').trim();
-  if (activeClient && clients.includes(activeClient)) {
-    clients = [activeClient];
-  } else if (activeClient) {
-    // Show empty if active client doesn't exist yet (about to be created)
-    clients = [];
-  }
-  // If no active client, show all (initial state / library navigation)
 
   if (!clients.length) {
-    list.innerHTML = '<div class="sb-empty">Sin cliente activo</div>';
+    list.innerHTML = activeClient
+      ? `<div class="sb-empty">Cliente "${activeClient.replace(/</g,'&lt;')}" se creará al guardar</div>`
+      : '<div class="sb-empty">Sin clientes guardados</div>';
     return;
   }
 
@@ -9142,7 +9154,7 @@ function updateSidebarClients() {
     const driveBtn = driveLink ? `<span class="sb-client-drive" onclick="event.stopPropagation();window.open('${driveLink.replace(/'/g,"\\'")}', '_blank')" title="Abrir Drive">
       <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
     </span>` : '';
-    return `<div class="sb-client-item" onclick="openClientLibrary('${escAttr}')">
+    return `<div class="sb-client-item ${c === activeClient ? 'active' : ''}" onclick="openClientLibrary('${escAttr}')">
       <span class="sb-client-dot"></span>
       <span class="sb-client-name">${escHTML}</span>
       ${driveBtn}
@@ -9400,6 +9412,7 @@ function showAppNew() {
   if (currentUser) {
     setTimeout(() => {
       if (typeof restoreStudioState === 'function') restoreStudioState();
+      if (typeof updateSidebarClients === 'function') updateSidebarClients();
     }, 600);
   }
 }
@@ -9443,6 +9456,9 @@ function saveClientData() {
     return;
   }
   
+  console.log('[saveClientData] Saving:', name);
+  console.log('[saveClientData] currentUser:', currentUser ? currentUser.name : 'NULL/UNDEFINED');
+  
   // Save to studio state immediately
   if (typeof saveStudioState === 'function') saveStudioState();
   
@@ -9461,6 +9477,7 @@ function saveClientData() {
       typo: document.getElementById('kvTypo')?.value?.trim() || '',
       web: document.getElementById('kvWeb')?.value?.trim() || '',
       instagram: document.getElementById('kvInstagram')?.value?.trim() || '',
+      drive: document.getElementById('kvDrive')?.value?.trim() || '',
       kvThumb: (kvThumb?.src?.startsWith('data:')) ? kvThumb.src : '',
       kvFilename,
       colors: (typeof extractedColors !== 'undefined') ? extractedColors.map(c => ({hex:c.hex,name:c.name})) : [],
@@ -9471,17 +9488,27 @@ function saveClientData() {
     if (existing?.logo) profiles[name].logo = existing.logo;
     localStorage.setItem('pdpvs_profiles', JSON.stringify(profiles));
     if (typeof renderProfileCards === 'function') renderProfileCards();
-  } catch(e) { console.warn('Profile save:', e); }
+    console.log('[saveClientData] Profile saved');
+  } catch(e) { console.error('[saveClientData] Profile save error:', e); }
   
-  // Add client to library structure
-  if (currentUser) {
+  // Add client to library structure — ALWAYS, even if currentUser is null
+  try {
     const lib = loadLibrary();
     if (!lib[name]) {
       lib[name] = { bajadas: [], refs: [], keywords: [], prompts: [], pieces: [], keyvisuals: [], notes: [] };
+      console.log('[saveClientData] New library entry created');
+    } else {
+      console.log('[saveClientData] Library entry already exists');
     }
     saveLibrary(lib);
-    updateSidebarClients();
-  }
+    console.log('[saveClientData] Library saved to:', getLibraryKey());
+    
+    // Update sidebar
+    if (typeof updateSidebarClients === 'function') {
+      updateSidebarClients();
+      console.log('[saveClientData] Sidebar updated');
+    }
+  } catch(e) { console.error('[saveClientData] Library save error:', e); }
   
   // Show saved banner
   const banner = document.getElementById('clientSavedBanner');
@@ -10150,6 +10177,15 @@ function renderVersionDrawer(cardIdx, type) {
       }).join('')}
     </div>
   </div>`;
+}
+
+function restoreLastVersion(cardIdx, type) {
+  // Helper: restore the most recent version of given type
+  const versions = getVersions(cardIdx, type);
+  if (!versions.length) { showToast('No hay versiones anteriores'); return; }
+  // Skip index 0 (which is current) — restore index 1 if exists, else 0
+  const targetIdx = versions.length > 1 ? 1 : 0;
+  restoreVersion(cardIdx, type, targetIdx);
 }
 
 function restoreVersion(cardIdx, type, versionIdx) {
@@ -10948,8 +10984,7 @@ function saveEditorAsResult() {
   
   editor.forEach(item => {
     const img = new Image();
-    img.onload = () => {
-      ctx.drawImage(img, item.x * scale, item.y * scale, item.w * scale, item.h * scale);
+    const onComplete = () => {
       loadedCount++;
       if (loadedCount === total) {
         const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
@@ -10965,6 +11000,12 @@ function saveEditorAsResult() {
         showToast('Composición guardada en Resultados');
       }
     };
+    img.onload = () => {
+      try { ctx.drawImage(img, item.x * scale, item.y * scale, item.w * scale, item.h * scale); }
+      catch(e) { console.warn('Draw failed:', e); }
+      onComplete();
+    };
+    img.onerror = () => { console.warn('Image failed to load'); onComplete(); };
     img.src = item.img;
   });
 }

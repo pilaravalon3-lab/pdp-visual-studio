@@ -870,6 +870,24 @@ select {
 }
 .btn-search:hover { background: var(--purple); color: var(--white); border-color: var(--purple); box-shadow: 0 0 16px rgba(125,3,255,0.3); }
 
+/* Individual bank buttons */
+.bank-btns { display: flex; gap: 3px; flex-shrink: 0; }
+.bank-btn {
+  width: 26px; height: 26px; border-radius: 5px;
+  border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+  color: var(--text-muted); cursor: pointer; font-size: 8px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; letter-spacing: -0.5px;
+}
+.bank-btn:hover { transform: scale(1.1); }
+.bank-freepik:hover { background: rgba(0,168,107,0.2); border-color: #00a86b; color: #00a86b; }
+.bank-istock:hover { background: rgba(0,122,255,0.2); border-color: #007aff; color: #007aff; }
+.bank-unsplash:hover { background: rgba(255,255,255,0.1); border-color: #fff; color: #fff; }
+.bank-pexels:hover { background: rgba(5,182,155,0.2); border-color: #05b69b; color: #05b69b; }
+.bank-pinterest:hover { background: rgba(230,0,35,0.2); border-color: #e60023; color: #e60023; }
+.bank-all { background: rgba(125,3,255,0.1); border-color: var(--purple); color: var(--purple-light); font-size: 9px; }
+.bank-all:hover { background: var(--purple); color: white; }
+
 .custom-row { display: flex; gap: 8px; margin-top: 12px; }
 .custom-row input { flex: 1; padding: 10px 14px; font-size: 13px; margin: 0; }
 
@@ -1746,6 +1764,7 @@ input:focus, textarea:focus, select:focus {
   position: sticky; top: 20px;
   max-height: calc(100vh - 40px); overflow-y: auto;
   padding-right: 8px;
+  transition: all 0.3s ease;
 }
 #view-studio.has-results .studio-inputs::-webkit-scrollbar { width: 4px; }
 #view-studio.has-results .studio-inputs::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 4px; }
@@ -1835,13 +1854,14 @@ input:focus, textarea:focus, select:focus {
 /* Studio collapse/expand toggle */
 .studio-toggle-bar {
   display: flex; align-items: center; justify-content: center; gap: 10px;
-  padding: 12px; background: rgba(125,3,255,0.06); border: 1px solid var(--border);
+  padding: 12px; background: rgba(125,3,255,0.1); border: 1px solid rgba(125,3,255,0.25);
   border-radius: 10px; cursor: pointer; margin-bottom: 16px;
-  font-family: 'Unbounded', sans-serif; font-size: 10px; font-weight: 600;
-  letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted);
-  transition: all 0.2s;
+  font-family: 'Unbounded', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--purple-light);
+  transition: all 0.2s; position: sticky; top: 0; z-index: 5;
+  backdrop-filter: blur(10px);
 }
-.studio-toggle-bar:hover { background: rgba(125,3,255,0.12); color: var(--text); }
+.studio-toggle-bar:hover { background: rgba(125,3,255,0.2); color: var(--text); }
 
 .studio-inputs.collapsed > *:not(.studio-toggle-bar):not(.view-header) {
   display: none !important;
@@ -2592,10 +2612,20 @@ input:focus, textarea:focus, select:focus {
   background: rgba(255,255,255,0.02); border: 1px solid var(--border);
   border-radius: 8px; cursor: pointer; transition: all 0.2s;
   display: flex; flex-direction: column; gap: 4px;
+  position: relative;
 }
 .cal-cell:hover { background: rgba(125,3,255,0.08); border-color: var(--purple); }
 .cal-cell.other-month { opacity: 0.3; }
 .cal-cell.today { border-color: var(--hot-pink); border-width: 2px; }
+/* Full cell tint by state */
+.cal-cell.has-waiting { background: rgba(99,102,241,0.08); border-color: rgba(99,102,241,0.3); }
+.cal-cell.has-design { background: rgba(125,3,255,0.08); border-color: rgba(125,3,255,0.3); }
+.cal-cell.has-review { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.3); }
+.cal-cell.has-fix { background: rgba(255,121,57,0.08); border-color: rgba(255,121,57,0.3); }
+.cal-cell.has-approved { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.3); }
+.cal-cell.has-delivered { background: rgba(108,117,125,0.06); border-color: rgba(108,117,125,0.2); }
+.cal-cell.has-multi { background: linear-gradient(135deg, rgba(125,3,255,0.06), rgba(245,158,11,0.06)); border-color: rgba(125,3,255,0.25); }
+
 .cal-cell-num {
   font-family: 'Unbounded', sans-serif; font-size: 12px; font-weight: 700; color: var(--text);
 }
@@ -2605,13 +2635,57 @@ input:focus, textarea:focus, select:focus {
   background: var(--purple); color: var(--white);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   border-left: 3px solid var(--purple-light);
+  position: relative;
 }
-.cal-cell-event.state-waiting { background: rgba(99,102,241,0.7); }
-.cal-cell-event.state-design { background: rgba(125,3,255,0.85); }
-.cal-cell-event.state-review { background: rgba(245,158,11,0.85); }
-.cal-cell-event.state-fix { background: rgba(255,121,57,0.85); }
-.cal-cell-event.state-approved { background: rgba(34,197,94,0.8); }
-.cal-cell-event.state-delivered { background: rgba(108,117,125,0.7); }
+.cal-cell-event.state-waiting { background: rgba(99,102,241,0.7); border-left-color: #818cf8; }
+.cal-cell-event.state-design { background: rgba(125,3,255,0.85); border-left-color: #a78bfa; }
+.cal-cell-event.state-review { background: rgba(245,158,11,0.85); border-left-color: #fbbf24; }
+.cal-cell-event.state-fix { background: rgba(255,121,57,0.85); border-left-color: #fb923c; }
+.cal-cell-event.state-approved { background: rgba(34,197,94,0.8); border-left-color: #4ade80; }
+.cal-cell-event.state-delivered { background: rgba(108,117,125,0.7); border-left-color: #9ca3af; }
+/* Fix date marker (different from delivery) */
+.cal-cell-event.is-fix-date { border-left: 3px dashed #fb923c; opacity: 0.75; font-style: italic; }
+
+/* Tooltip on hover */
+.cal-cell-tooltip {
+  display: none; position: absolute; z-index: 999;
+  bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: #1a1a2e; border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 14px;
+  min-width: 200px; max-width: 280px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+.cal-cell:hover .cal-cell-tooltip { display: block; }
+.cal-cell-tooltip::after {
+  content: ''; position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent; border-top-color: #1a1a2e;
+}
+.cal-tooltip-client { font-family: 'Unbounded',sans-serif; font-size: 11px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.cal-tooltip-state { font-size: 10px; color: var(--text-muted); margin-bottom: 2px; }
+.cal-tooltip-days { font-size: 10px; font-weight: 600; }
+.cal-tooltip-days.overdue { color: #ef4444; }
+.cal-tooltip-days.ok { color: #22c55e; }
+.cal-tooltip-days.soon { color: #f59e0b; }
+
+/* Legend */
+.cal-legend {
+  display: flex; flex-wrap: wrap; gap: 12px; padding: 14px 0;
+  margin-top: 16px; border-top: 1px solid var(--border);
+}
+.cal-legend-item {
+  display: flex; align-items: center; gap: 6px; font-size: 10px; color: var(--text-muted);
+}
+.cal-legend-dot {
+  width: 10px; height: 10px; border-radius: 3px;
+}
+
+/* Progress indicator */
+.cal-cell-progress {
+  font-size: 8px; color: var(--text-dim); font-weight: 700;
+  margin-top: auto; text-align: right; letter-spacing: 0.5px;
+}
 
 .cal-week-list { display: flex; flex-direction: column; gap: 12px; }
 .cal-week-day {
@@ -3250,12 +3324,6 @@ input:focus, textarea:focus, select:focus {
       <div id="vdnaBody"></div>
     </div>
     
-    <!-- View: PINTEREST TOOLS -->
-    <div class="view-content" id="view-pinterest">
-
-    <!-- View: CAPTION ARCHITECT -->
-    <div class="view-content" id="view-captions">
-
     <!-- View: MI BIBLIOTECA DE REFERENCIAS -->
     <div class="view-content" id="view-mylibrary">
       <div class="view-header">
@@ -3276,6 +3344,9 @@ input:focus, textarea:focus, select:focus {
       <div id="mylibGrid" class="mb-grid"></div>
       <div id="mylibEmpty" class="dash-empty" style="display:none;padding:60px;">Sin referencias todavía. Subí o pegá tu primera imagen.</div>
     </div>
+
+    <!-- View: CAPTION ARCHITECT -->
+    <div class="view-content" id="view-captions">
       <div class="view-header">
         <h1 class="view-title">Caption Architect</h1>
         <p class="view-subtitle">Generá captions de Instagram a partir de la bajada del PDP — con hashtags y variantes</p>
@@ -3306,6 +3377,9 @@ input:focus, textarea:focus, select:focus {
         <div id="captionResults"></div>
       </div>
     </div>
+
+    <!-- View: PINTEREST TOOLS -->
+    <div class="view-content" id="view-pinterest">
       <div class="view-header">
         <h1 class="view-title">Pinterest Tools</h1>
         <p class="view-subtitle">Transformá referencias en prompts adaptados a tu cliente + armá moodboards visuales</p>
@@ -5171,48 +5245,47 @@ function openClientLink(fieldId) {
 
 // ═══ BANKS ═══
 function openAllBanks(query, color) {
-  if (!query || typeof query !== 'string') {
-    showToast('Keyword inválido');
-    return;
-  }
+  if (!query || typeof query !== 'string') { showToast('Keyword inválido'); return; }
   const cleanQuery = query.trim();
-  if (!cleanQuery) {
-    showToast('Keyword vacío');
-    return;
-  }
-  const e = encodeURIComponent(cleanQuery);
-  const colorName = color && /^#[0-9a-f]{6}$/i.test(color) ? getClosestColorName(color) : '';
-  const urls = [
-    `https://www.freepik.com/search?format=search&query=${e}${colorName ? `&color=${colorName}` : ''}`,
-    `https://www.istockphoto.com/search/2/image?phrase=${e}${colorName ? `&colortype=${colorName}` : ''}`,
-    `https://unsplash.com/s/photos/${e.replace(/%20/g,'-')}`,
-    `https://www.pexels.com/search/${e}/${colorName ? `?color=${colorName}` : ''}`,
-    `https://www.pinterest.com/search/pins/?q=${e}${colorName ? `+${colorName}` : ''}`
-  ];
-  
-  // Open first tab immediately (user gesture - won't be blocked)
-  const firstTab = window.open(urls[0], '_blank');
-  if (!firstTab) {
-    showToast('Habilitá popups para abrir 5 bancos');
-    // Fallback: open just the first one with location
-    window.location.href = urls[0];
-    return;
-  }
-  
-  // Stagger remaining tabs to avoid popup blockers
+  if (!cleanQuery) { showToast('Keyword vacío'); return; }
+  const urls = getBankUrls(cleanQuery, color);
+  const firstTab = window.open(urls[0].url, '_blank');
+  if (!firstTab) { showToast('Habilitá popups para abrir 5 bancos'); window.location.href = urls[0].url; return; }
   let delay = 100;
   for (let i = 1; i < urls.length; i++) {
-    setTimeout(() => {
-      try {
-        window.open(urls[i], '_blank');
-      } catch(e) {
-        console.warn('Bank tab blocked:', urls[i]);
-      }
-    }, delay);
-    delay += 100;
+    setTimeout(() => { try { window.open(urls[i].url, '_blank'); } catch {} }, delay);
+    delay += 150;
   }
-  
-  showToast(`Abriendo ${urls.length} bancos...`);
+}
+
+function getBankUrls(query, color) {
+  const e = encodeURIComponent(query.trim());
+  const colorName = color && /^#[0-9a-f]{6}$/i.test(color) ? getClosestColorName(color) : '';
+  return [
+    { name: 'Freepik', icon: '🟢', url: `https://www.freepik.com/search?format=search&query=${e}${colorName ? `&color=${colorName}` : ''}` },
+    { name: 'iStock', icon: '🔵', url: `https://www.istockphoto.com/search/2/image?phrase=${e}${colorName ? `&colortype=${colorName}` : ''}` },
+    { name: 'Unsplash', icon: '⚫', url: `https://unsplash.com/s/photos/${e.replace(/%20/g,'-')}` },
+    { name: 'Pexels', icon: '🟤', url: `https://www.pexels.com/search/${e}/${colorName ? `?color=${colorName}` : ''}` },
+    { name: 'Pinterest', icon: '🔴', url: `https://www.pinterest.com/search/pins/?q=${e}${colorName ? `+${colorName}` : ''}` },
+  ];
+}
+
+function openSingleBank(bankIndex, query, color) {
+  const urls = getBankUrls(query, color);
+  if (urls[bankIndex]) window.open(urls[bankIndex].url, '_blank');
+}
+
+function renderBankButtons(query, colorFilter) {
+  const safeQ = String(query||'').replace(/'/g,"\\'").replace(/"/g,'&quot;');
+  const safeC = String(colorFilter||'').replace(/'/g,"\\'");
+  return `<div class="bank-btns">
+    <button class="bank-btn bank-freepik" onclick="openSingleBank(0,'${safeQ}','${safeC}')" title="Freepik">Fk</button>
+    <button class="bank-btn bank-istock" onclick="openSingleBank(1,'${safeQ}','${safeC}')" title="iStock">iS</button>
+    <button class="bank-btn bank-unsplash" onclick="openSingleBank(2,'${safeQ}','${safeC}')" title="Unsplash">Un</button>
+    <button class="bank-btn bank-pexels" onclick="openSingleBank(3,'${safeQ}','${safeC}')" title="Pexels">Px</button>
+    <button class="bank-btn bank-pinterest" onclick="openSingleBank(4,'${safeQ}','${safeC}')" title="Pinterest">Pi</button>
+    <button class="bank-btn bank-all" onclick="openAllBanks('${safeQ}','${safeC}')" title="Abrir todos">5</button>
+  </div>`;
 }
 
 function getClosestColorName(hex) {
@@ -6613,7 +6686,7 @@ function renderKeywordsSection(idx, keywords, colorFilter) {
             <div class="kw-item${isFav ? ' kw-fav' : ''}">
               <button class="kw-fav-btn${isFav ? ' active' : ''}" onclick="toggleFavKeyword(${idx}, '${safeAttr}', this)" title="${isFav ? 'Quitar de favoritos' : 'Agregar a favoritos'}">★</button>
               <span class="kw-text">${safeText}</span>
-              <button class="btn-search" onclick="openAllBanks('${safeAttr}', '${colorFilter || ''}')">Buscar en 5 bancos</button>
+              ${renderBankButtons(kw, colorFilter)}
               <button class="kw-discard-btn" onclick="discardKeyword(${idx}, '${safeAttr}', this)" title="No me sirve — el Studio aprende">✕</button>
             </div>`;
           }).join('')}
@@ -6632,7 +6705,7 @@ function renderKeywordsSection(idx, keywords, colorFilter) {
             <div class="kw-item kw-fav">
               <button class="kw-fav-btn active" onclick="toggleFavKeyword(${idx}, '${k.replace(/'/g,"\\'")}', this)">★</button>
               <span class="kw-text">${k}</span>
-              <button class="btn-search" onclick="openAllBanks('${k.replace(/'/g,"\\'")}', '${colorFilter || ''}')">Buscar</button>
+              ${renderBankButtons(k, colorFilter)}
             </div>
           `).join('')}
         </div>
@@ -6650,7 +6723,7 @@ function renderKeywordsSection(idx, keywords, colorFilter) {
           ${savedKw.map((k,ki) => `
             <div class="kw-item" style="border-color:rgba(0,255,0,0.15);">
               <input class="kw-text-editable" data-ki="${ki}" data-card="${idx}" value="${String(k).replace(/"/g,'&quot;')}" onblur="editUserKeyword(${ki}, this.value, ${idx})" onkeydown="if(event.key==='Enter')this.blur()" />
-              <button class="btn-search" onclick="searchUserKeyword(${idx}, ${ki})">Buscar</button>
+              ${renderBankButtons(k, allResults[idx]?.colorFilter || '')}
               <button class="btn-ghost" style="padding:4px 8px;font-size:9px;color:var(--orange);" onclick="userKeywords.splice(${ki},1);regenerateKeywords(${idx})">✕</button>
             </div>
           `).join('')}
@@ -8077,11 +8150,12 @@ function copyAllKeywords() {
   navigator.clipboard.writeText(t).then(() => showToast('Keywords copiados'));
 }
 
-function showToast(msg) {
+function showToast(msg, duration) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  clearTimeout(window._toastTimeout);
+  window._toastTimeout = setTimeout(() => t.classList.remove('show'), duration || 2500);
 }
 // ═══════════════════════════════════════════════════════════════
 // MAIN NAV TABS
@@ -8193,6 +8267,9 @@ function renderMonthView(body) {
   
   const today = new Date(); today.setHours(0,0,0,0);
   
+  const stateEmoji = { waiting: '⏳', design: '🟣', review: '🟡', fix: '🟠', approved: '🟢', delivered: '✅' };
+  const stateLabel = { waiting: 'Esperando bajada', design: 'En diseño', review: 'Esperando feedback', fix: 'Correcciones', approved: 'Aprobado', delivered: 'Entregado' };
+  
   let html = `<div class="cal-month-nav">
     <button onclick="navMonth(-1)">‹</button>
     <span style="flex:1;text-align:center;">${monthNames[month]} ${year}</span>
@@ -8212,19 +8289,62 @@ function renderMonthView(body) {
     const date = new Date(year, month, d);
     const dateStr = date.toISOString().split('T')[0];
     const isToday = date.getTime() === today.getTime();
-    const entriesOnDay = calEntries.filter(e => 
-      e.dateDeliver === dateStr || e.dateFix === dateStr
-    );
     
-    const escAttr = s => String(s).replace(/'/g,"\\'").replace(/"/g,'&quot;');
-    html += `<div class="cal-cell ${isToday ? 'today' : ''}" onclick="openCalCellModal('${dateStr}')">
+    // Entries on this day: delivery OR fix date
+    const deliveriesOnDay = calEntries.filter(e => e.dateDeliver === dateStr);
+    const fixesOnDay = calEntries.filter(e => e.dateFix === dateStr && e.dateDeliver !== dateStr);
+    const allOnDay = [...deliveriesOnDay, ...fixesOnDay];
+    
+    // Determine cell tint class
+    let cellTint = '';
+    if (allOnDay.length > 1) {
+      // Multiple entries — check if different states
+      const states = [...new Set(allOnDay.map(e => e.state))];
+      cellTint = states.length > 1 ? 'has-multi' : `has-${states[0]}`;
+    } else if (allOnDay.length === 1) {
+      cellTint = `has-${allOnDay[0].state}`;
+    }
+    
+    // Build tooltip
+    let tooltip = '';
+    if (allOnDay.length) {
+      const daysUntil = Math.ceil((date - today) / 86400000);
+      tooltip = `<div class="cal-cell-tooltip">`;
+      allOnDay.forEach(e => {
+        const isFix = fixesOnDay.includes(e);
+        const dClass = daysUntil < 0 ? 'overdue' : daysUntil <= 3 ? 'soon' : 'ok';
+        const dText = daysUntil < 0 ? `${Math.abs(daysUntil)}d vencido` : daysUntil === 0 ? 'HOY' : `${daysUntil}d restantes`;
+        const pieces = e.deliverables?.pieces || 0;
+        tooltip += `
+          <div class="cal-tooltip-client">${stateEmoji[e.state] || ''} ${escapeHTMLEntry(e.client || '')}</div>
+          <div class="cal-tooltip-state">${isFix ? '📝 Fecha de corrección' : '📦 Fecha de entrega'} · ${stateLabel[e.state] || e.state}</div>
+          ${pieces ? `<div class="cal-tooltip-state">Piezas: ${pieces}</div>` : ''}
+          <div class="cal-tooltip-days ${dClass}">${dText}</div>
+        `;
+      });
+      tooltip += `</div>`;
+    }
+    
+    // Progress indicator (delivered vs total for this client's month)
+    let progress = '';
+    if (deliveriesOnDay.length) {
+      const clientEntries = calEntries.filter(e => e.client === deliveriesOnDay[0].client);
+      const done = clientEntries.filter(e => e.state === 'delivered' || e.state === 'approved').length;
+      const total = clientEntries.length;
+      if (total > 1) progress = `<div class="cal-cell-progress">${done}/${total}</div>`;
+    }
+    
+    html += `<div class="cal-cell ${isToday ? 'today' : ''} ${cellTint}" onclick="openCalCellModal('${dateStr}')">
       <div class="cal-cell-num">${d}</div>
-      ${entriesOnDay.slice(0,3).map(e => {
-        const isFix = e.dateFix === dateStr && e.dateDeliver !== dateStr;
-        const label = isFix ? `📝 ${e.client}` : `✓ ${e.client}`;
-        return `<div class="cal-cell-event state-${e.state}" onclick="event.stopPropagation();editCalEntry('${e.id}')">${escapeHTMLEntry(label).slice(0,20)}</div>`;
-      }).join('')}
-      ${entriesOnDay.length > 3 ? `<div style="font-size:9px;color:var(--text-muted);">+${entriesOnDay.length-3} más</div>` : ''}
+      ${deliveriesOnDay.slice(0,2).map(e => 
+        `<div class="cal-cell-event state-${e.state}" onclick="event.stopPropagation();editCalEntry('${e.id}')">${escapeHTMLEntry('✓ ' + (e.client||'').slice(0,18))}</div>`
+      ).join('')}
+      ${fixesOnDay.slice(0,2).map(e => 
+        `<div class="cal-cell-event state-${e.state} is-fix-date" onclick="event.stopPropagation();editCalEntry('${e.id}')">${escapeHTMLEntry('📝 ' + (e.client||'').slice(0,16))}</div>`
+      ).join('')}
+      ${allOnDay.length > 4 ? `<div style="font-size:9px;color:var(--text-muted);">+${allOnDay.length-4} más</div>` : ''}
+      ${progress}
+      ${tooltip}
     </div>`;
   }
   
@@ -8236,6 +8356,18 @@ function renderMonthView(body) {
   }
   
   html += `</div>`;
+  
+  // Legend
+  html += `<div class="cal-legend">
+    <div class="cal-legend-item"><div class="cal-legend-dot" style="background:rgba(99,102,241,0.7);"></div>Esperando bajada</div>
+    <div class="cal-legend-item"><div class="cal-legend-dot" style="background:rgba(125,3,255,0.85);"></div>En diseño</div>
+    <div class="cal-legend-item"><div class="cal-legend-dot" style="background:rgba(245,158,11,0.85);"></div>Feedback</div>
+    <div class="cal-legend-item"><div class="cal-legend-dot" style="background:rgba(255,121,57,0.85);"></div>Correcciones</div>
+    <div class="cal-legend-item"><div class="cal-legend-dot" style="background:rgba(34,197,94,0.8);"></div>Aprobado</div>
+    <div class="cal-legend-item"><div class="cal-legend-dot" style="background:rgba(108,117,125,0.7);"></div>Entregado</div>
+    <div class="cal-legend-item"><div class="cal-legend-dot" style="border:2px dashed #fb923c;background:transparent;"></div>Corrección</div>
+  </div>`;
+  
   body.innerHTML = html;
 }
 
@@ -8303,22 +8435,36 @@ function escapeHTMLEntry(s) {
 
 function renderEntryCard(e, contextDate) {
   const totalPieces = (parseInt(e.pieces)||0) + (parseInt(e.reels)||0) + (parseInt(e.stories)||0) + (parseInt(e.carousels)||0);
-  const dateLabel = contextDate === e.dateFix ? '📝 Corrección' : e.dateDeliver ? '🚀 Entrega' : '';
+  const isFix = contextDate === e.dateFix && e.dateDeliver !== contextDate;
+  const dateLabel = isFix ? '📝 Corrección' : e.dateDeliver ? '🚀 Entrega' : '';
   const formatDate = (d) => {
     if (!d) return '';
     const dt = new Date(d);
     return `${dt.getDate()}/${dt.getMonth()+1}`;
   };
   
-  return `<div class="entry-card" onclick="editCalEntry('${e.id}')">
+  // Days until delivery
+  const today = new Date(); today.setHours(0,0,0,0);
+  const deliverDate = new Date(e.dateDeliver);
+  const daysUntil = Math.ceil((deliverDate - today) / 86400000);
+  const daysText = daysUntil < 0 ? `<span style="color:#ef4444;font-weight:700;">${Math.abs(daysUntil)}d vencido</span>` 
+    : daysUntil === 0 ? `<span style="color:#f59e0b;font-weight:700;">HOY</span>` 
+    : daysUntil <= 3 ? `<span style="color:#f59e0b;">${daysUntil}d</span>`
+    : `<span style="color:var(--text-dim);">${daysUntil}d</span>`;
+  
+  const stateLabel = { waiting: '⏳ Esperando', design: '🟣 Diseño', review: '🟡 Feedback', fix: '🟠 Corrección', approved: '🟢 OK', delivered: '✅ Listo' };
+  
+  return `<div class="entry-card ${isFix ? 'is-fix-entry' : ''}" onclick="editCalEntry('${e.id}')">
     <button class="entry-card-delete" onclick="event.stopPropagation();deleteCalEntry('${e.id}')" title="Eliminar">
       <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg>
     </button>
     <div class="entry-card-head">
       <div class="entry-card-client">${escapeHTMLEntry(e.client || 'Sin cliente')}</div>
+      <div style="font-size:9px;">${daysText}</div>
     </div>
     <div class="entry-card-pdp">${escapeHTMLEntry(e.pdp || '')}</div>
     <div class="entry-card-meta">
+      <span class="entry-card-chip" style="background:rgba(125,3,255,0.15);color:var(--purple-light);">${stateLabel[e.state] || e.state}</span>
       ${dateLabel ? `<span class="entry-card-chip chip-date">${dateLabel} ${formatDate(contextDate || e.dateDeliver)}</span>` : ''}
       ${totalPieces ? `<span class="entry-card-chip">${totalPieces} piezas</span>` : ''}
       ${e.pieces > 0 ? `<span class="entry-card-chip">${e.pieces} estáticos</span>` : ''}
@@ -8377,6 +8523,12 @@ function openCalModal() {
 function openCalCellModal(dateStr) {
   openCalModal();
   document.getElementById('calDateDeliver').value = dateStr;
+  // Pre-fill active studio client if the client field is empty
+  const clientField = document.getElementById('calClient');
+  if (clientField && !clientField.value.trim()) {
+    const activeClient = (document.getElementById('clientName')?.value || '').trim();
+    if (activeClient) clientField.value = activeClient;
+  }
 }
 
 function closeCalModal() {
@@ -8702,7 +8854,6 @@ function getStudioStateKey() {
 }
 
 function saveStudioState() {
-  if (!currentUser) return;
   try {
     const state = {
       client: {
@@ -8732,7 +8883,6 @@ function saveStudioState() {
 }
 
 function restoreStudioState() {
-  if (!currentUser) return;
   try {
     const state = JSON.parse(localStorage.getItem(getStudioStateKey()) || 'null');
     if (!state) return;
@@ -9013,7 +9163,7 @@ function saveLibrary(lib) {
 
 // Add item to client's library
 function addToLibrary(clientName, type, data) {
-  if (!clientName || !currentUser) return;
+  if (!clientName) return;
   const lib = loadLibrary();
   if (!lib[clientName]) {
     lib[clientName] = { bajadas: [], refs: [], keywords: [], prompts: [], pieces: [], keyvisuals: [], notes: [] };
@@ -9041,7 +9191,6 @@ function addToLibrary(clientName, type, data) {
 
 // Auto-save the whole current studio state into library
 function autoSaveToLibrary() {
-  if (!currentUser) return;
   const clientName = document.getElementById('clientName')?.value?.trim();
   if (!clientName) return;
 
@@ -9100,7 +9249,7 @@ function autoSaveToLibrary() {
 
 // Reference images stored separately (they can be large)
 function addRefToLibrary(clientName, imgData, label) {
-  if (!clientName || !currentUser) return;
+  if (!clientName) return;
   addToLibrary(clientName, 'refs', { img: imgData, label: label || 'Referencia' });
 }
 
@@ -11398,8 +11547,6 @@ function openDrivePath(level) {
     return;
   }
   
-  // For "root", open as-is. For subfolders, we open the root and show instructions
-  // because we cannot construct URLs to non-existent subfolders without Google API
   if (level === 'root') {
     window.open(root, '_blank');
     return;
@@ -11409,21 +11556,36 @@ function openDrivePath(level) {
   const y = document.getElementById('driveYearSelect')?.value || new Date().getFullYear();
   const monthName = MESES_ES[m];
   
-  const pathMap = {
-    year: `${y}`,
-    month: `${y} / ${monthName}`,
-    diseno: `${y} / ${monthName} / Diseño`,
-    reels: `${y} / ${monthName} / Reels`,
-    historias: `${y} / ${monthName} / Historias`
+  // Target folder name (last segment — what you'd search in Drive)
+  const targetMap = {
+    year: y,
+    month: monthName,
+    diseno: 'Diseño',
+    reels: 'Reels',
+    historias: 'Historias'
   };
   
-  // Open Drive root and copy the path to clipboard so user can search/navigate
+  const pathMap = {
+    year: `${y}`,
+    month: `${y} → ${monthName}`,
+    diseno: `${y} → ${monthName} → Diseño`,
+    reels: `${y} → ${monthName} → Reels`,
+    historias: `${y} → ${monthName} → Historias`
+  };
+  
+  const target = targetMap[level] || '';
+  const path = pathMap[level] || '';
+  
+  // Copy folder name to clipboard for quick search in Drive
+  if (target) {
+    navigator.clipboard.writeText(target).catch(() => {});
+  }
+  
+  // Open Drive root
   window.open(root, '_blank');
   
-  // Also store the target path
-  const path = pathMap[level] || '';
-  navigator.clipboard.writeText(path).catch(() => {});
-  showToast(`Drive abierto · Navegá a: ${path}`);
+  // Show visible instruction
+  showToast(`📁 "${target}" copiado · Pegalo en la búsqueda de Drive\nRuta: ${path}`, 4000);
 }
 
 function copyDriveLinkToShare() {
